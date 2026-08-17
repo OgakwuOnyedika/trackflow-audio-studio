@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { TrackStudioView } from '../src/views/TrackStudioView';
@@ -29,7 +29,7 @@ describe('Track Lane Parameter & Solo/Mute Operations', () => {
 
     // Adjust volume slider on muted Lead Vocals
     const volSlider = screen.getByLabelText(/volume for lead vocals/i);
-    await user.type(volSlider, '95');
+    fireEvent.change(volSlider, { target: { value: '95' } });
 
     // Mute button must remain pressed (not unexpectedly unmuted)
     expect(screen.getByRole('button', { name: /mute lead vocals/i })).toHaveAttribute('aria-pressed', 'true');
